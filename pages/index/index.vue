@@ -34,10 +34,12 @@
 		async onLoad() {
 		   // const res=await this.$u.get('/api/index');
 		    // const res=await this.$u.post('/api/auth/wx/bind');
-			console.log(111);
-		   const res=await this.$u.post('/api/auth/login');
-		   console.log(222);
-		   console.log(res);
+			// console.log(111);
+		 //   const res=await this.$u.post('/api/auth/login');
+		 //   console.log(222);
+		 //   console.log(res);
+		 const res=await this.$u.patch('/api/orders/1/confirm',{name:'Tom'});
+		 console.log(res);
 		},
 		methods: {
 		}

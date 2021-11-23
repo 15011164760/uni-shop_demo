@@ -76,6 +76,13 @@ const install = (Vue, vm) => {
 			return false;
 		}
 	}
+	vm.$u.patch=(url,params={})=>{
+		const _params={
+			...params,
+			_method:'PATCH'
+		}
+		return vm.$u.post(url,_params)
+	}
 }
 
 export default {
