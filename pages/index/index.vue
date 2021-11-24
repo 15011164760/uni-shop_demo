@@ -38,8 +38,14 @@
 		 //   const res=await this.$u.post('/api/auth/login');
 		 //   console.log(222);
 		 //   console.log(res);
-		 const res=await this.$u.patch('/api/orders/1/confirm',{name:'Tom'});
-		 console.log(res);
+		 // const res=await this.$u.patch('/api/orders/1/confirm',{name:'Tom'});
+		 // console.log(res);
+		 // 假设不需要在响应拦截器中自动弹出的toast，以及不想写catch(如果promise中进行reject，但是却没有catch的话会报错)
+		 this.$u.api.getMenu({ custome: { auth: true, toast: false, catch: false }}).then(() => {
+		 	console.log(111)
+		 }).catch(()=>{
+			 console.log(222)
+		 })
 		},
 		methods: {
 		}

@@ -76,7 +76,7 @@ const install = (Vue, vm) => {
 			return false;
 		}
 	}
-	vm.$u.patch=(url,params={})=>{
+	vm.$u.patch=(url,params={},header={})=>{
 		const _params={
 			...params,
 			_method:'PATCH'
