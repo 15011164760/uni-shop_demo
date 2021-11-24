@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-
+import store from '@/store';
 Vue.config.productionTip = false
 
 App.mpType = 'app'
@@ -8,8 +8,12 @@ App.mpType = 'app'
 // 引入全局uView
 import uView from 'uview-ui'
 Vue.use(uView);
+// main.js
 
+let vuexStore = require("@/store/$u.mixin.js");
+Vue.mixin(vuexStore);
 const app = new Vue({
+	store,
     ...App
 })
 

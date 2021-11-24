@@ -46,6 +46,11 @@
 		 }).catch(()=>{
 			 console.log(222)
 		 })
+		 this.$u.api.authLogin({ custome: { auth: true, toast: false, catch: false }}).then(() => {
+		 	console.log(111)
+		 }).catch(()=>{
+		 			 console.log(222)
+		 })
 		},
 		methods: {
 		}
