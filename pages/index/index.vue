@@ -1,27 +1,9 @@
 <template>
-	<view>
-		首页
-		<view class="wrap">
-				<u-row gutter="6">
-					<u-col span="3">
-						<view class="demo-layout bg-purple"></view>
-					</u-col>
-					<u-col span="4">
-						<view class="demo-layout bg-purple-light"></view>
-					</u-col>
-					<u-col span="5">
-						<view class="demo-layout bg-purple-dark"></view>
-					</u-col>
-				</u-row>
-				<u-row gutter="16" justify="space-between">
-					<u-col span="3">
-						<view class="demo-layout bg-purple"></view>
-					</u-col>
-					<u-col span="9">
-						<view class="demo-layout bg-purple-light"></view>
-					</u-col>
-				</u-row>
-			</view>
+	<view class="wrap">
+	   <u-swiper :list="list"></u-swiper>
+	   <view class="u-text-center u-m-t-20">
+		   <u-tabs :list="tabList" bar-width="100" item-width="160" :current="current" @change="change"></u-tabs>
+	   </view>
 	</view>
 </template>
 
@@ -29,6 +11,25 @@
 	export default {
 		data() {
 			return {
+				list:[
+					'https://cdn.uviewui.com/uview/swiper/1.jpg',
+					'https://cdn.uviewui.com/uview/swiper/2.jpg',
+					'https://cdn.uviewui.com/uview/swiper/3.jpg',
+				],
+				tabList: [{
+									name: '默认'
+								}, {
+									name: '推荐'
+								}, {
+									name: '销量',
+									// count: 5
+								},
+								{
+									name: '最新',
+									// count: 5
+								}
+								],
+								current: 0
 			}
 		},
 		async onLoad() {
@@ -41,7 +42,7 @@
 		 // const res=await this.$u.patch('/api/orders/1/confirm',{name:'Tom'});
 		 // console.log(res);
 		 // 假设不需要在响应拦截器中自动弹出的toast，以及不想写catch(如果promise中进行reject，但是却没有catch的话会报错)
-		 this.$u.api.getMenu({ custome: { auth: true, toast: false, catch: false }}).then(() => {
+		/* this.$u.api.getMenu({ custome: { auth: true, toast: false, catch: false }}).then(() => {
 		 	console.log(111)
 		 }).catch(()=>{
 			 console.log(222)
@@ -50,9 +51,12 @@
 		 	console.log(111)
 		 }).catch(()=>{
 		 			 console.log(222)
-		 })
+		 }) */
 		},
 		methods: {
+			change(index) {
+							this.current = index;
+						}
 		}
 	}
 </script>
@@ -60,26 +64,5 @@
 <style lang="scss" scoped>
 	.wrap {
 			padding: 24rpx;
-		}
-	
-		.u-row {
-			margin: 40rpx 0;
-		}
-	
-		.demo-layout {
-			height: 80rpx;
-			border-radius: 8rpx;
-		}
-	
-		.bg-purple {
-			background: #d3dce6;
-		}
-	
-		.bg-purple-light {
-			background: #e5e9f2;
-		}
-	
-		.bg-purple-dark {
-			background: #99a9bf;
 		}
 </style>

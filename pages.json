@@ -14,16 +14,19 @@
 			"style": {
 				"navigationBarTitleText": "个人中心"
 			}
+		},
+		{
+			"path": "pages/shop/index",
+			"style": {
+				"navigationBarTitleText": "商城"
+			}
+		},
+		{
+			"path": "pages/shopCar/index",
+			"style": {
+				"navigationBarTitleText": "购物车"
+			}
 		}
-	    ,{
-            "path" : "pages/qq/qq",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
         ,{
             "path" : "pages/storeVuexDemo/storeVuexDemo",
             "style" :                                                                                    
