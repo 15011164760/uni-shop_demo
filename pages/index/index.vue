@@ -26,6 +26,8 @@
 		data() {
 			return {
 				slides:[],
+				page:1,
+				goods:[],
 				tabList: [{
 									name: '默认'
 								}, {
@@ -42,7 +44,7 @@
 								current: 0
 			}
 		},
-		async onLoad() {
+		onLoad() {
 		   // const res=await this.$u.get('/api/index');
 		    // const res=await this.$u.post('/api/auth/wx/bind');
 			// console.log(111);
@@ -62,15 +64,26 @@
 		 }).catch(()=>{
 		 			 console.log(222)
 		 }) */
-		let res=await this.$u.api.index()
-		console.log(res);
-		this.slides=res.slides;
-		this.goods=res.goods.data;
+		this.getData();
 		},
 		methods: {
+			async getData(){
+				let params={
+					 page:this.page
+				}
+				let res=await this.$u.api.index(params)
+				console.log(res);
+				this.slides=res.slides;
+				this.goods=[...this.goods,...res.goods.data];
+			},
 			change(index) {
 							this.current = index;
-						}
+						},
+			onReachBottom(){
+				console.log('111');
+				this.page+=1;
+				this.getData();
+			}
 		}
 	}
 </script>
