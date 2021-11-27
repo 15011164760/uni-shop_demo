@@ -11,7 +11,7 @@ const install = (Vue, vm) => {
 	vm.$u.api.postMenu = (params, config = {}) => http.post('/ebapi/public_api/index', params, config)
 	//首页
 	// get请求，获取菜单，注意：get请求的配置等，都在第二个参数中，详见前面解释
-	vm.$u.api.getMenu = (data) => http.get(indexUrl, data)
+	vm.$u.api.index = (data) => http.get('/api/index', data)
 	// post请求，认证相关的
 	vm.$u.api.authLogin = (params, config = {}) => http.post('/api/auth/login', params, config)
 }

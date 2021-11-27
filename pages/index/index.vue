@@ -1,19 +1,19 @@
 <template>
 	<view class="wrap">
-	   <u-swiper :list="list"></u-swiper>
+	   <u-swiper :list="slides" name="img_url" height="320"></u-swiper>
 	   <view class="u-text-center u-m-t-20">
 		   <u-tabs :list="tabList" bar-width="100" item-width="160" :current="current" @change="change"></u-tabs>
 	   </view>
 	   <u-row gutter="16">
-	   			<u-col span="6" v-for="i in 10">
+	   			<u-col span="6" v-for="(item,index) in goods" :key="index">
 						<navigator class="goods-item">
-							<u-image width="100%" height="300rpx" src="https://oss.shop.eduwork.cn/product/2020-0820-5f3e152e57d13.png"></u-image>
-						    <view class="title">
-								区块链
+							<u-image width="100%" height="300rpx" :src="item.cover_url"></u-image>
+						    <view class="title u-line-1">
+								{{item.title}}
 							</view>
 							<view class="u-flex u-row-between">
-								<view class="price">$99</view>
-								<view class="sales">销量:10</view>
+								<view class="price">${{item.price}}</view>
+								<view class="sales">销量:{{item.sales}}</view>
 							</view>
 						</navigator>
 	   			</u-col>
@@ -25,11 +25,7 @@
 	export default {
 		data() {
 			return {
-				list:[
-					'https://cdn.uviewui.com/uview/swiper/1.jpg',
-					'https://cdn.uviewui.com/uview/swiper/2.jpg',
-					'https://cdn.uviewui.com/uview/swiper/3.jpg',
-				],
+				slides:[],
 				tabList: [{
 									name: '默认'
 								}, {
@@ -66,6 +62,10 @@
 		 }).catch(()=>{
 		 			 console.log(222)
 		 }) */
+		let res=await this.$u.api.index()
+		console.log(res);
+		this.slides=res.slides;
+		this.goods=res.goods.data;
 		},
 		methods: {
 			change(index) {
