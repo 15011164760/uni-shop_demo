@@ -2,7 +2,7 @@
 	<view class="wrap">
 	   <u-swiper :list="slides" name="img_url" height="320"></u-swiper>
 	   <view class="u-text-center u-m-t-20">
-		   <u-tabs :list="tabList" bar-width="100" item-width="160" :current="current" @change="change"></u-tabs>
+		   <u-tabs :list="tabList" bar-width="100" item-width="160" :current="currentSort" @change="changeSort"></u-tabs>
 	   </view>
 	   <u-row gutter="16">
 	   			<u-col span="6" v-for="(item,index) in goods" :key="index">
@@ -31,9 +31,9 @@
 				tabList: [{
 									name: '默认'
 								}, {
-									name: '推荐'
+									name: '销量'
 								}, {
-									name: '销量',
+									name: '推荐',
 									// count: 5
 								},
 								{
@@ -41,7 +41,7 @@
 									// count: 5
 								}
 								],
-								current: 0
+								currentSort: 0
 			}
 		},
 		onLoad() {
@@ -71,13 +71,19 @@
 				let params={
 					 page:this.page
 				}
+				if(this.currentSort==1)params.sales=1
+				if(this.currentSort==2)params.recommend=1
+				if(this.currentSort==3)params.new=1
 				let res=await this.$u.api.index(params)
 				console.log(res);
 				this.slides=res.slides;
 				this.goods=[...this.goods,...res.goods.data];
 			},
-			change(index) {
-							this.current = index;
+			changeSort(index) {
+							this.currentSort = index;
+							this.page=1;
+							this.goods=[];
+							this.getData();
 						},
 			onReachBottom(){
 				console.log('111');
