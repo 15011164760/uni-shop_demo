@@ -5,17 +5,8 @@
 		   <u-tabs :list="tabList" bar-width="100" item-width="160" :current="currentSort" @change="changeSort"></u-tabs>
 	   </view>
 	   <u-row gutter="16" class="u-skeleton">
-	   			<u-col span="6" v-for="(item,index) in goods.length!==0?goods:4" :key="index">
-						<navigator class="goods-item">
-							<u-image class="u-skeleton-fillet" width="100%" height="300rpx" :src="item.cover_url"></u-image>
-						    <view class="title u-line-1 u-skeleton-rect">
-								{{item.title?item.title:'商品名称'}}
-							</view>
-							<view class="u-flex u-row-between">
-								<view class="price u-skeleton-rect">${{item.price}}</view>
-								<view class="sales u-skeleton-rect">销量:{{item.sales}}</view>
-							</view>
-						</navigator>
+	   			<u-col span="6" v-for="(item,index) in goods.length!==0?goods:[{},{},{},{}]" :key="index">
+						<goods-item :item="item"></goods-item>
 	   			</u-col>
 	   	</u-row>
 		<u-skeleton :loading="loading" :animation="true" bgColor="#FFF"></u-skeleton>
@@ -103,25 +94,6 @@
 	.wrap {
 			padding: 24rpx;
 		}
-		.goods-item{
-			padding: 40rpx;
-			margin-top: 30rpx;
-			box-shadow: 0 12rpx 20rpx 0 rgba(0,0,0,.1);
-			.title{
-				font-size: 32rpx;
-				font-weight: 500;
-				margin:10rpx 0;
-				width: 100%;
-			}
-			.price{
-				color:red;
-				min-width: 100rpx;
-			}
-			.sales{
-				color: #888;
-				// width: 60%;
-				min-width: 100rpx;
-			}
-		}
+		
 		
 </style>
