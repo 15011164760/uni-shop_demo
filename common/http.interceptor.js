@@ -58,12 +58,17 @@ const install = (Vue, vm) => {
 			vm.$u.toast(data.message);
 			return false;
 		}else if(statusCode == 401) {
-			// 假设201为token失效，这里跳转登录
-			vm.$u.toast('验证失败，请重新登录');
-			setTimeout(() => {
-				// 此为uView的方法，详见路由相关文档
-				vm.$u.route('/pages/user/login')
-			}, 1500)
+			if(data.message=='Unauthorized'){
+				vm.$u.toast('账号或者密码错误');
+			}else{
+				// 假设201为token失效，这里跳转登录
+				vm.$u.toast('验证失败，请重新登录');
+				setTimeout(() => {
+					// 此为uView的方法，详见路由相关文档
+					vm.$u.route('/pages/user/login')
+				}, 1500)
+			}
+			
 			return false;
 		}else if(statusCode == 422) {
 			let {errors}=data;
