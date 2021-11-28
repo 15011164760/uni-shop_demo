@@ -32,6 +32,10 @@ export default {
 			return style;
 		}
 	},
+	async onLoad(){
+	let userInfo=await this.$u.api.userInfo();
+	console.log(userInfo);	
+	},
 	methods: {
 		async submit() {
 			if(this.$u.test.email(this.email)&&this.password) {
@@ -42,8 +46,12 @@ export default {
 					email:this.email,
 					password:this.password
 				}
-				let res=await this.$u.api.authLogin(paramLogin)
-				console.log(res);
+				let loginRes=await this.$u.api.authLogin(paramLogin)
+				this.$u.vuex('vuex_token',loginRes.access_token);
+				console.log(loginRes);
+				let userInfo=await this.$u.api.userInfo();
+				this.$u.vuex('vuex_user',userInfo);
+				console.log(userInfo);
 			}
 			
 		}

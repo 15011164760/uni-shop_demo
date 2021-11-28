@@ -14,6 +14,9 @@ const install = (Vue, vm) => {
 	vm.$u.api.index = (data) => http.get('/api/index', data)
 	// post请求，认证相关的
 	vm.$u.api.authLogin = (params, config = {}) => http.post('/api/auth/login', params, config)
+	//用户相关的
+	vm.$u.api.userInfo = (params, config = {}) => http.get('/api/user', params, config)//用户详情
+	
 }
 
 export default {
