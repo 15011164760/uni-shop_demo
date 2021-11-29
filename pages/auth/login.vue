@@ -33,8 +33,8 @@ export default {
 		}
 	},
 	async onLoad(){
-	let userInfo=await this.$u.api.userInfo();
-	console.log(userInfo);	
+	// let userInfo=await this.$u.api.userInfo();
+	// console.log(userInfo);	
 	},
 	methods: {
 		async submit() {
@@ -48,10 +48,19 @@ export default {
 				}
 				let loginRes=await this.$u.api.authLogin(paramLogin)
 				this.$u.vuex('vuex_token',loginRes.access_token);
+				this.$u.toast('登录成功');
 				console.log(loginRes);
 				let userInfo=await this.$u.api.userInfo();
 				this.$u.vuex('vuex_user',userInfo);
 				console.log(userInfo);
+				//登录之后跳转到来源页面
+				const back_url=uni.getStorageSync('back_url')||'pages/index/index'
+				setTimeout(()=>{
+					this.$u.route({
+						type:'reLaunch',
+						url:back_url
+					})  
+				},1500)
 			}
 			
 		}

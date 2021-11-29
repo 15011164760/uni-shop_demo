@@ -11,16 +11,7 @@
 			}
 		},
 		onLoad() {
-          const token=this.vuex_token;
-		  if(!token){
-			 this.$u.toast('请登录');
-			  setTimeout(()=>{
-				this.$u.route({
-					type:'redirect',
-					url:'pages/auth/login'
-				})  
-			  },1500)
-		  }
+		 if(!this.$u.utils.isLogin()) return
 		},
 		methods: {
 
