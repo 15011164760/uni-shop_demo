@@ -57,7 +57,6 @@
 		 }).catch(()=>{
 		 			 console.log(222)
 		 }) */
-		 this.$u.api.userInfo();
 		this.getData();
 		},
 		methods: {

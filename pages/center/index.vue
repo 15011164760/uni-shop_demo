@@ -26,7 +26,7 @@
 		
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="reload" title="退出登录"></u-cell-item>
+				<u-cell-item icon="reload" title="退出登录" @click="authLoginOutFn"></u-cell-item>
 			</u-cell-group>
 		</view>
 	</view>
@@ -41,6 +41,7 @@
 			}
 		},
 		onLoad() {
+			this.$u.api.userInfo();
 			// if(!this.$u.utils.isLogin()) return
 		},
 		methods: {
@@ -48,6 +49,19 @@
 			   this.$u.route({
 				   url:'pages/center/baseInfo'
 			   })
+			},
+			authLoginOutFn(){
+				this.$u.api.authLoginOut();
+				this.$u.toast('注册成功');
+				setTimeout(()=>{
+					this.$u.vuex('vuex_token',null);
+					this.$u.vuex('vuex_user',{});
+					this.$u.route({
+						type:'reLaunch',
+						url:'pages/auth/login'
+					})
+				},1500)
+				
 			}
 		}
 	}
