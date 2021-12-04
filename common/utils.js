@@ -26,9 +26,13 @@ const install=(Vue,vm)=>{
 		}
 		return true
 	}
-		
+	const updataUser=async ()=>{
+		let userInfo=await vm.$u.api.userInfo();
+		vm.$u.vuex('vuex_user',userInfo);
+		console.log(userInfo);
+	}	
 	vm.$u.utils={
-		isLogin
+		isLogin,updataUser
 	}
 	
 }

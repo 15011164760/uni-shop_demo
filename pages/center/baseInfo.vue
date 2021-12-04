@@ -4,9 +4,6 @@
 			<u-form-item label="姓名" prop="name" required>
 				<u-input v-model="form.name" />
 			</u-form-item>
-			<u-form-item label="简介" prop="intro" required>
-				<u-input v-model="form.intro" />
-			</u-form-item>
 		</u-form>
 		<u-button @click="submit">提交</u-button>
 	</view>
@@ -18,7 +15,6 @@
 			return {
 				form: {
 					name: '',
-					intro: '',
 				},
 				rules: {
 					name: [{
@@ -27,20 +23,16 @@
 						// 可以单个或者同时写两个触发验证方式 
 						trigger: ['change', 'blur'],
 					}],
-					intro: [{
-						required: true,
-						min: 5,
-						message: '简介不能少于5个字',
-						trigger: 'change'
-					}]
 				}
 			}
 		},
 		methods: {
            submit() {
-           			this.$refs.uForm.validate(valid => {
+           			this.$refs.uForm.validate(async (valid) => {
            				if (valid) {
            					console.log('验证通过');
+							await this.$u.api.userInfoUpdate(this.form);
+							this.$u.utils.updataUser()
            				} else {
            					console.log('验证失败');
            				}

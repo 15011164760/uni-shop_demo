@@ -50,9 +50,7 @@ export default {
 				this.$u.vuex('vuex_token',loginRes.access_token);
 				this.$u.toast('登录成功');
 				console.log(loginRes);
-				let userInfo=await this.$u.api.userInfo();
-				this.$u.vuex('vuex_user',userInfo);
-				console.log(userInfo);
+				this.$u.$util.updataUser()
 				//登录之后跳转到来源页面
 				const back_url=uni.getStorageSync('back_url')||'pages/index/index'
 				setTimeout(()=>{
