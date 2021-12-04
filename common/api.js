@@ -15,11 +15,15 @@ const install = (Vue, vm) => {
 	// post请求，认证相关的
 	vm.$u.api.authLogin = (params, config = {}) => http.post('/api/auth/login', params, config)//登陆
 	vm.$u.api.authLoginOut = (params, config = {}) => http.post('/api/auth/logout')//登陆
+	vm.$u.api.authOssToken = (params, config = {}) => http.get('/api/auth/oss/token')//获取阿里云OSS Token，用于前端直传文件使用
 	vm.$u.api.authRegister = (params, config = {}) => http.post('/api/auth/register', params, config)//注册
 	//用户相关的信息
 	vm.$u.api.userInfo = (params, config = {}) => http.get('/api/user')//用户详情
 	//更新用户个人信息
 	vm.$u.api.userInfoUpdate = (params, config = {}) => http.put('/api/user', params)
+	//上传头像
+	vm.$u.api.userAvatar = (params, config = {}) => vm.$u.patch('api/user/avatar', params)
+	///api/user/avatar
 	
 }
 

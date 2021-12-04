@@ -1,8 +1,8 @@
 <template>
 	<view>
 		<view class="u-flex user-box u-p-l-30 u-p-r-20 u-p-b-30 u-p-t-30">
-			<view class="u-m-r-10">
-				<u-avatar :src="vuex_user.avatar_url" size="140"></u-avatar>
+			<view class="u-m-r-10 avator-body">
+				<oss-upload></oss-upload>
 			</view>
 			<view class="u-flex-1">
 				<view class="u-font-18 u-p-b-20">{{vuex_user.name}}</view>
@@ -50,9 +50,9 @@
 				   url:'pages/center/baseInfo'
 			   })
 			},
-			authLoginOutFn(){
-				this.$u.api.authLoginOut();
-				this.$u.toast('注册成功');
+			async authLoginOutFn(){
+				await this.$u.api.authLoginOut();
+				this.$u.toast('退出成功');
 				setTimeout(()=>{
 					this.$u.vuex('vuex_token',null);
 					this.$u.vuex('vuex_user',{});
@@ -61,7 +61,6 @@
 						url:'pages/auth/login'
 					})
 				},1500)
-				
 			}
 		}
 	}
@@ -82,6 +81,10 @@ page{
 }
 .user-box{
 	background-color: #fff;
+}
+.avator-body{
+	width:70px;
+	height:70px;
 }
 </style>
 
