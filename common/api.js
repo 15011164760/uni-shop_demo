@@ -13,7 +13,8 @@ const install = (Vue, vm) => {
 	// get请求，获取菜单，注意：get请求的配置等，都在第二个参数中，详见前面解释
 	vm.$u.api.index = (data) => http.get('/api/index', data)
 	// post请求，认证相关的
-	vm.$u.api.authLogin = (params, config = {}) => http.post('/api/auth/login', params, config)
+	vm.$u.api.authLogin = (params, config = {}) => http.post('/api/auth/login', params, config)//登陆
+	vm.$u.api.authRegister = (params, config = {}) => http.post('/api/auth/register', params, config)//注册
 	//用户相关的信息
 	vm.$u.api.userInfo = (params, config = {}) => http.get('/api/user', params, config)//用户详情
 	//更新用户个人信息

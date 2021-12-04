@@ -2,14 +2,12 @@
 	<view class="wrap">
 		<view class="top"></view>
 		<view class="content">
-			<view class="title">欢迎登录图书商城</view>
+			<view class="title">注册图书商城账户</view>
+			<input class="u-border-bottom"  v-model="name" placeholder="请输入昵称" />
 			<input class="u-border-bottom"  v-model="email" placeholder="请输入邮箱" />
 			<input class="u-border-bottom" type="password" v-model="password" placeholder="请输入密码" />
-			<button @tap="submit" :style="[inputStyle]" class="getCaptcha">登录</button>
-			<view class="alternative">
-				<view class="password">密码登录</view>
-				<view class="issue" @click="registerFn">注册</view>
-			</view>
+			<input class="u-border-bottom" type="password" v-model="password_confirmation" placeholder="确认密码" />
+			<button @tap="registerFn" :style="[inputStyle]" class="getCaptcha">注册</button>
 		</view>
 	</view>
 </template>
@@ -18,14 +16,16 @@
 export default {
 	data() {
 		return {
+			name: '',
 			email: '',
 			password: '',
+			password_confirmation: ''
 		}
 	},
 	computed: {
 		inputStyle() {
 			let style = {};
-			if(this.$u.test.email(this.email)&&this.password) {
+			if(this.$u.test.email(this.email)&&this.password&&this.password==this.password_confirmation) {
 				style.color = "#fff";
 				style.backgroundColor = this.$u.color['warning'];
 			}
@@ -38,43 +38,21 @@ export default {
 	},
 	methods: {
 		registerFn(){
-				this.$u.route({
-							url: 'pages/auth/register',
-						})
-			// let params={
-			// 	name:'yangdx',
-			// 	email:'1152@qq.com',
-			// 	password:'123123',
-			// 	password_confirmation:'123123'
-			// }
-			// this.$u.api.authRegister(params);
-			// this.$u.$util.updataUser()
-		},
-		async submit() {
-			if(this.$u.test.email(this.email)&&this.password) {
-				// this.$u.route({
-				// 	url: 'pages/template/login/code'
-				// })
-				let paramLogin={
-					email:this.email,
-					password:this.password
-				}
-				let loginRes=await this.$u.api.authLogin(paramLogin)
-				this.$u.vuex('vuex_token',loginRes.access_token);
-				this.$u.toast('登录成功');
-				console.log(loginRes);
-				this.$u.utils.updataUser()
-				//登录之后跳转到来源页面
-				const back_url=uni.getStorageSync('back_url')||'pages/index/index'
-				setTimeout(()=>{
-					this.$u.route({
-						type:'reLaunch',
-						url:back_url
-					})  
-				},1500)
+			let params={
+				name:this.name,
+				email:this.email,
+				password:this.password,
+				password_confirmation:this.password_confirmation
 			}
-			
-		}
+			this.$u.api.authRegister(params);
+			this.$u.toast('注册成功');
+			setTimeout(()=>{
+				this.$u.route({
+					type:'reLaunch',
+					url:'pages/auth/login'
+				}) 
+			},1500)
+s		},
 	}
 };
 </script>
