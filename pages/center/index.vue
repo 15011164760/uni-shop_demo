@@ -12,7 +12,7 @@
 		
 		<view class="u-m-t-20">
 			<u-cell-group>
-				<u-cell-item icon="setting" title="个人信息"></u-cell-item>
+				<u-cell-item icon="setting" title="个人信息" @click="baseInfoFn"></u-cell-item>
 				<u-cell-item icon="rmb-circle" title="所有订单"></u-cell-item>
 			</u-cell-group>
 		</view>
@@ -44,7 +44,11 @@
 			// if(!this.$u.utils.isLogin()) return
 		},
 		methods: {
-			
+			baseInfoFn(){
+			   this.$u.route({
+				   url:'pages/center/baseInfo'
+			   })
+			}
 		}
 	}
 </script>
