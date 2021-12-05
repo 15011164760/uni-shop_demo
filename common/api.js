@@ -1,6 +1,4 @@
 const http = uni.$u.http
-let indexUrl='/api/index';
-
 
 // /common/http.interceptor.js
 
@@ -23,7 +21,9 @@ const install = (Vue, vm) => {
 	vm.$u.api.userInfoUpdate = (params, config = {}) => http.put('/api/user', params)
 	//上传头像
 	vm.$u.api.userAvatar = (params, config = {}) => vm.$u.patch('api/user/avatar', params)
-	///api/user/avatar
+	//商品相关
+	//商品详情
+	vm.$u.api.goodsInfo = id => http.get(`/api/goods/${id}`)
 	
 }
 

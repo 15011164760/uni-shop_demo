@@ -20,6 +20,11 @@
 			"style": {
 				"navigationBarTitleText": "商城"
 			}
+		},{
+			"path": "pages/shop/detail",
+			"style": {
+				"navigationBarTitleText": "商城详情"
+			}
 		},
 		{
 			"path": "pages/shopCar/index",
