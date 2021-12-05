@@ -46,9 +46,9 @@
 
 		<view class="navigation u-absolute">
 			<view class="left">
-				<view class="item" @click="collectionHandle()">
+				<view class="item u-flex-col" @click="goodsCollectFn()" style="align-items: center;">
 					<u-icon name="star-fill" :size="40" :color="isCollect === 1 ? '#ed3f14' : ''"></u-icon>
-					<view class="text u-line-1">收藏</view>
+					<view class="text u-line-1">{{isCollect === 1 ?'取消收藏':'收藏'}}</view>
 				</view>
 				<view class="item car" @click="toCart">
 					<u-badge class="car-num" :count="cartCount" type="error" :offset="[-3, -6]"></u-badge>
@@ -91,47 +91,32 @@
 			this.goodsId=options.id;
 			console.log(options);
 			this.getGoodsDetail(this.goodsId)
-			// this.getCartsCount()
 		},
 		methods: {
+			// // 点击收藏取消
+			async goodsCollectFn(){
+				if (!this.$u.utils.isLogin()) return;
+				await this.$u.api.goodsCollect(this.goodsInfo.id);
+				// console.log(res);
+				if (this.isCollect === 0) {
+					this.isCollect = 1
+					this.$u.toast('收藏成功')
+				} else {
+					this.isCollect = 0
+					this.$u.toast('取消收藏成功')
+				}
+			},
 			async getGoodsDetail(id){
 				let res=await this.$u.api.goodsInfo(id);
 				console.log(res);
 				this.goodsInfo=res.goods;
+				this.isCollect=res.goods.is_collect;
 				this.commentList = res.goods.comments;
 				this.like_goodsList=res.like_goods;
 			},
 			changeTabs(index) {
 				this.current = index
 			}
-			// 获取商品信息
-			// async getGoodsDetail(goodsId) {
-			// 	this.loading = true
-			// 	const res = await this.$u.api.goodsDetail(goodsId)
-			// 	this.loading = false
-			// 	// console.log(res)
-			// 	// 获取商品信息
-			// 	this.goodsInfo = res.goods
-			// 	this.isCollect = res.goods.is_collect
-			// 	// 评论列表
-			// 	this.commentList = res.goods.comments
-			// 	// 推荐商品列表
-			// 	this.like_goodsList = res.like_goods
-			// },
-			// // 切换tab选项
-			
-			// // 点击收藏取消
-			// async collectionHandle() {
-			// 	if (!this.$u.utils.isLogin()) return;
-			// 	await this.$u.api.collectsCollectionAndCancel(this.goodsInfo.id)
-			// 	if (this.isCollect === 0) {
-			// 		this.isCollect = 1
-			// 		this.$u.toast('收藏成功')
-			// 	} else {
-			// 		this.isCollect = 0
-			// 		this.$u.toast('取消收藏成功')
-			// 	}
-			// },
 			
 			// // 加入购物车
 			// async addCart(){

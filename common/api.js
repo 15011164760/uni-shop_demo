@@ -24,7 +24,8 @@ const install = (Vue, vm) => {
 	//商品相关
 	//商品详情
 	vm.$u.api.goodsInfo = id => http.get(`/api/goods/${id}`)
-	
+	//商品收藏
+	vm.$u.api.goodsCollect = id => http.post(`/api/collects/goods/${id}`);
 }
 
 export default {
