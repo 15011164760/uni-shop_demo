@@ -91,6 +91,7 @@
 			this.goodsId=options.id;
 			console.log(options);
 			this.getGoodsDetail(this.goodsId)
+			this.getCartsCount();
 		},
 		methods: {
 			// // 点击收藏取消
@@ -116,27 +117,27 @@
 			},
 			changeTabs(index) {
 				this.current = index
-			}
+			},
 			
 			// // 加入购物车
-			// async addCart(){
-			// 	const params = {
-			// 		goods_id: this.goodsInfo.id
-			// 	}
+			async addCart(){
+				const params = {
+					goods_id: this.goodsInfo.id
+				}
 				
-			// 	await this.$u.api.cartsAdd(params)
-			// 	// 更新购物车数量
-			// 	this.getCartsCount()
-			// 	this.$u.toast('添加成功')
-			// },
+				await this.$u.api.cartsAdd(params)
+				// 更新购物车数量
+				this.getCartsCount()
+				this.$u.toast('添加成功')
+			},
 			// // 获取购物车数量
-			// async getCartsCount(){
-			// 	if(this.$u.utils.isLogin()){
-			// 		const res = await this.$u.api.cartsList()
-			// 		console.log(res)
-			// 		this.cartCount = res.data.length
-			// 	}
-			// },
+			async getCartsCount(){
+				if(this.$u.utils.isLogin()){
+					const res = await this.$u.api.cartsList()
+					console.log(res)
+					this.cartCount = res.data[0].num
+				}
+			},
 			
 			// // 跳转到购物车页面
 			// toCart(){

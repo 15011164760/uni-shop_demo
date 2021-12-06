@@ -26,6 +26,10 @@ const install = (Vue, vm) => {
 	vm.$u.api.goodsInfo = id => http.get(`/api/goods/${id}`)
 	//商品收藏
 	vm.$u.api.goodsCollect = id => http.post(`/api/collects/goods/${id}`);
+	//加入购物车
+	vm.$u.api.cartsAdd = params => http.post(`/api/carts`,params);	
+	//获取购物车数量
+	vm.$u.api.cartsList = params => http.get(`/api/carts`,params);	
 }
 
 export default {
