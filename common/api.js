@@ -30,6 +30,8 @@ const install = (Vue, vm) => {
 	vm.$u.api.cartsAdd = params => http.post(`/api/carts`,params);	
 	//获取购物车数量
 	vm.$u.api.cartsList = params => http.get(`/api/carts`,params);	
+	//商品分类
+	vm.$u.api.goodsList = params => http.get(`/api/goods`,params);	
 }
 
 export default {

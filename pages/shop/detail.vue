@@ -132,7 +132,9 @@
 			},
 			// // 获取购物车数量
 			async getCartsCount(){
-				if(this.$u.utils.isLogin()){
+				const token=this.vuex_token;
+				if(!token){
+				// if(this.$u.utils.isLogin()){
 					const res = await this.$u.api.cartsList()
 					console.log(res)
 					this.cartCount = res.data[0].num

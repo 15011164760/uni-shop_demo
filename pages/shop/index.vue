@@ -8,28 +8,22 @@
 		</view>
 		<view class="u-menu-wrap">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
-				<view v-for="(item,index) in tabbar" :key="index" class="u-tab-item" :class="[current==index ? 'u-tab-item-active' : '']"
-				 :data-current="index" @tap.stop="swichMenu(index)">
-					<text class="u-line-1">{{item.name}}</text>
+				<block v-for="(items,key) in categories" :key="key">
+					<view v-for="(item,index) in items.children" :key="index" class="u-tab-item" :class="[current==(key+'-'+index) ? 'u-tab-item-active' : '']"
+					 :data-current="index" @tap.stop="swichMenu(key+'-'+index)">
+						<text class="u-line-1">{{item.name}}</text>
+					</view>
+				</block>
+				
+			</scroll-view>
+			<scroll-view scroll-y class="right-box" >
+				<view class="item-container">
+					<navigator :url="`/pages/shop/detail?id=${item1.id}`" class="thumb-box" v-for="(item1, index1) in goodListData" :key="index1">
+						<image class="item-menu-image" :src="item1.cover_url" mode=""></image>
+						<view class="item-menu-name">{{item1.title}}</view>
+					</navigator>
 				</view>
 			</scroll-view>
-			<block v-for="(item,index) in tabbar" :key="index">
-				<scroll-view scroll-y class="right-box" v-if="current==index">
-					<view class="page-view">
-						<view class="class-item">
-							<view class="item-title">
-								<text>{{item.name}}</text>
-							</view>
-							<view class="item-container">
-								<view class="thumb-box" v-for="(item1, index1) in item.foods" :key="index1">
-									<image class="item-menu-image" :src="item1.icon" mode=""></image>
-									<view class="item-menu-name">{{item1.name}}</view>
-								</view>
-							</view>
-						</view>
-					</view>
-				</scroll-view>
-			</block>
 		</view>
 	</view>
 </template>
@@ -39,9 +33,11 @@
 	export default {
 		data() {
 			return {
+				categories:[],
+				goodListData:[],
 				tabbar: classifyData,
 				scrollTop: 0, //tab标题的滚动条位置
-				current: 0, // 预设当前项的值
+				current: '0-0', // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
 				menuItemHeight: 0, // 左边菜单item的高度
 			}
@@ -49,7 +45,19 @@
 		computed: {
 			
 		},
+			
+		onLoad(){
+			this.goodsList();
+		},
 		methods: {
+			async goodsList(){
+				let res=await this.$u.api.goodsList({
+					page:this.current
+				});
+				console.log(res);
+				this.categories=res.categories;
+				this.goodListData=res.goods.data;
+			},
 			getImg() {
 				return Math.floor(Math.random() * 35);
 			},
@@ -191,7 +199,7 @@
 	}
 	
 	.thumb-box {
-		width: 33.333333%;
+		width: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
