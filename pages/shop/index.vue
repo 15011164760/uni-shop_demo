@@ -1,10 +1,7 @@
 <template>
 	<view class="u-wrap">
 		<view class="u-search-box">
-			<view class="u-search-inner">
-				<u-icon name="search" color="#909399" :size="28"></u-icon>
-				<text class="u-search-text">搜索uView</text>
-			</view>
+			<u-search placeholder="请输入商品名称" v-model="keyword" @custom="searchGoods" @clear="clearGoods"></u-search>
 		</view>
 		<view class="u-menu-wrap">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
@@ -33,6 +30,8 @@
 	export default {
 		data() {
 			return {
+				keyword:'',
+				page:1,
 				categories:[],
 				goodListData:[],
 				tabbar: classifyData,
@@ -50,10 +49,21 @@
 			this.goodsList();
 		},
 		methods: {
+			searchGoods(){
+				this.page=1;
+				this.goodsList();
+			},
+			clearGoods(){
+				this.page=1;
+				this.keyword='';
+				this.goodsList();
+			},
 			async goodsList(){
-				let res=await this.$u.api.goodsList({
-					page:this.current
-				});
+				let params={
+					page:this.current,
+					title:this.keyword
+				}
+				let res=await this.$u.api.goodsList(params);
 				console.log(res);
 				this.categories=res.categories;
 				this.goodListData=res.goods.data;
