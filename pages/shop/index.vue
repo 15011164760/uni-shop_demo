@@ -6,8 +6,8 @@
 		<view class="u-menu-wrap">
 			<scroll-view scroll-y scroll-with-animation class="u-tab-view menu-scroll-view" :scroll-top="scrollTop">
 				<block v-for="(items,key) in categories" :key="key">
-					<view v-for="(item,index) in items.children" :key="index" class="u-tab-item" :class="[current==(key+'-'+index) ? 'u-tab-item-active' : '']"
-					 :data-current="index" @tap.stop="swichMenu(key+'-'+index)">
+					<view v-for="(item,index) in items.children" :key="item.id" class="u-tab-item" :class="[current==(item.id) ? 'u-tab-item-active' : '']"
+					 :data-current="item.id" @tap.stop="swichMenu(item.id)">
 						<text class="u-line-1">{{item.name}}</text>
 					</view>
 				</block>
@@ -19,6 +19,7 @@
 						<image class="item-menu-image" :src="item1.cover_url" mode=""></image>
 						<view class="item-menu-name">{{item1.title}}</view>
 					</navigator>
+					<u-empty v-if="goodListData.length==0" text="数据为空" mode="list" class="u-p-t-80 u-p-b-80 u-flex-1"></u-empty>
 				</view>
 			</scroll-view>
 		</view>
@@ -36,7 +37,7 @@
 				goodListData:[],
 				tabbar: classifyData,
 				scrollTop: 0, //tab标题的滚动条位置
-				current: '0-0', // 预设当前项的值
+				current: 0, // 预设当前项的值
 				menuHeight: 0, // 左边菜单的高度
 				menuItemHeight: 0, // 左边菜单item的高度
 			}
@@ -60,9 +61,10 @@
 			},
 			async goodsList(){
 				let params={
-					page:this.current,
+					page:this.page,
 					title:this.keyword
 				}
+				if(this.current)params.category_id	=this.current;
 				let res=await this.$u.api.goodsList(params);
 				console.log(res);
 				this.categories=res.categories;
@@ -72,16 +74,18 @@
 				return Math.floor(Math.random() * 35);
 			},
 			// 点击左边的栏目切换
-			async swichMenu(index) {
-				if(index == this.current) return ;
-				this.current = index;
-				// 如果为0，意味着尚未初始化
-				if(this.menuHeight == 0 || this.menuItemHeight == 0) {
-					await this.getElRect('menu-scroll-view', 'menuHeight');
-					await this.getElRect('u-tab-item', 'menuItemHeight');
-				}
+			async swichMenu(itemId) {
+				if(itemId == this.current) return ;
+				this.current = itemId;
+				this.page=1;
+				this.goodsList();
+				// // 如果为0，意味着尚未初始化
+				// if(this.menuHeight == 0 || this.menuItemHeight == 0) {
+				// 	await this.getElRect('menu-scroll-view', 'menuHeight');
+				// 	await this.getElRect('u-tab-item', 'menuItemHeight');
+				// }
 				// 将菜单菜单活动item垂直居中
-				this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
+				// this.scrollTop = index * this.menuItemHeight + this.menuItemHeight / 2 - this.menuHeight / 2;
 			},
 			// 获取一个目标元素的高度
 			getElRect(elClass, dataVal) {
